@@ -1,11 +1,16 @@
 import React from 'react';
-import firebase from 'firebase/app';
+import PropTypes from 'prop-types';
+import firebase from 'firebase/auth';
 
 class LoginContainer extends React.Component {
   state = {
     email: '',
     password: '',
   };
+
+  onLogin() {
+    this.props.history.push('/');
+  }
 
   handleEmailChange = event => {
     this.setState({ email: event.target.value });
@@ -30,6 +35,7 @@ class LoginContainer extends React.Component {
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(res => {
         console.log(`firebase response: ${res}`);
+        this.onLogin();
       })
       .catch(err => {
         if (err.code === 'auth/user-not-found') {
@@ -46,6 +52,7 @@ class LoginContainer extends React.Component {
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(res => {
         console.log(res);
+        this.onLogin();
       })
       .catch(error => {
         console.log(error);
@@ -79,5 +86,9 @@ class LoginContainer extends React.Component {
     );
   }
 }
+
+LoginContainer.propTypes = {
+  history: PropTypes.object,
+};
 
 export default LoginContainer;

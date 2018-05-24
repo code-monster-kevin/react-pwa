@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import firebase from 'firebase';
+import { Route, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import firebase from 'firebase/auth';
 import Header from './Header';
 import LoginContainer from './LoginContainer';
 import ChatContainer from './ChatContainer';
@@ -28,23 +29,24 @@ class App extends React.Component {
         console.log(`firebase user: ${user}`);
         this.setState({ user });
       } else {
-        console.log('user is null');
-        this.setState({ user: null });
+        this.props.history.push('/login');
       }
     });
   }
 
   render() {
     return (
-      <BrowserRouter>
-      <div id="main" className="px4">
-        <Header />
-        <Route exact path="/" component={ChatContainer} />
-        <Route path="/login" component={LoginContainer} />
-      </div>
-      </BrowserRouter>
+        <div id="main" className="px4">
+          <Header />
+          <Route exact path="/" component={ChatContainer} />
+          <Route path="/login" component={LoginContainer} />
+        </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  history: PropTypes.object,
+};
+
+export default withRouter(App);
