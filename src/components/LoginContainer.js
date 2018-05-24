@@ -29,7 +29,7 @@ class LoginContainer extends React.Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(res => {
-        console.log(res);
+        console.log(`firebase response: ${res}`);
       })
       .catch(err => {
         if (err.code === 'auth/user-not-found') {
