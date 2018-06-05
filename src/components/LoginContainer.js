@@ -35,8 +35,7 @@ class LoginContainer extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(res => {
-        console.log(res);
+      .then(() => {
         this.onLogin();
       })
       .catch(err => {
@@ -52,19 +51,17 @@ class LoginContainer extends React.Component {
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(res => {
-        console.log(res);
+      .then(() => {
         this.onLogin();
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
         this.setState({ error: 'Error signing up.' });
       });
   }
 
   render() {
     return (
-      <div id="LoginContainer" className="mr1">
+      <div id="LoginContainer" className="inner-container">
         <Header />
         <form onSubmit={this.handleSubmit}>
           <p>Sign in or sign up by entering your email and password.</p>
@@ -81,7 +78,7 @@ class LoginContainer extends React.Component {
             onChange={this.handlePasswordChange}
             value={this.state.password}
           />
-          <button className="btn" type="submit">
+          <button className="red light" type="submit">
             Login
           </button>
         </form>
