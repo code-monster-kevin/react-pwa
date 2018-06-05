@@ -1,23 +1,17 @@
 import React from 'react';
-import firebase from 'firebase/auth';
+import PropTypes from 'prop-types';
 import Logo from '../static/images/icon.png';
 
-class Header extends React.Component {
-  handleLogout = () => {
-    firebase.auth().signOut();
-  };
+const Header = props => (
+  <div id="Header">
+    <img src={Logo} alt="logo" />
+    <h1>react pwa</h1>
+    {props.children}
+  </div>
+);
 
-  render() {
-    return (
-      <div id="Header">
-        <img src={Logo} alt="logo" />
-        <h1>react pwa</h1>
-        <button className="btn" onClick={this.handleLogout}>
-          Logout
-        </button>
-      </div>
-    );
-  }
-}
+Header.propTypes = {
+  children: PropTypes.any,
+};
 
 export default Header;

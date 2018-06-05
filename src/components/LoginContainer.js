@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import firebase from 'firebase/auth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import Header from './Header';
 
 class LoginContainer extends React.Component {
   state = {
@@ -34,7 +36,7 @@ class LoginContainer extends React.Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(res => {
-        console.log(`firebase response: ${res}`);
+        console.log(res);
         this.onLogin();
       })
       .catch(err => {
@@ -63,6 +65,7 @@ class LoginContainer extends React.Component {
   render() {
     return (
       <div id="LoginContainer" className="mr1">
+        <Header />
         <form onSubmit={this.handleSubmit}>
           <p>Sign in or sign up by entering your email and password.</p>
           <p className="error">{this.state.error}</p>

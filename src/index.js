@@ -7,6 +7,8 @@ import './styles/index.css';
 const MOUNT_ELEMENT = document.getElementById('root');
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>, MOUNT_ELEMENT);
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  MOUNT_ELEMENT,
+);

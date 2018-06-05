@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import firebase from 'firebase/auth';
-import Header from './Header';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import LoginContainer from './LoginContainer';
 import ChatContainer from './ChatContainer';
+import UserContainer from './UserContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -26,7 +27,6 @@ class App extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(`firebase user: ${user}`);
         this.setState({ user });
       } else {
         this.props.history.push('/login');
@@ -36,11 +36,11 @@ class App extends React.Component {
 
   render() {
     return (
-        <div id="main" className="px4">
-          <Header />
-          <Route exact path="/" component={ChatContainer} />
-          <Route path="/login" component={LoginContainer} />
-        </div>
+      <div id="main" className="px4">
+        <Route exact path="/" component={ChatContainer} />
+        <Route path="/login" component={LoginContainer} />
+        <Route path="/users/:id" component={UserContainer} />
+      </div>
     );
   }
 }
