@@ -7,8 +7,23 @@ import Header from './Header';
 import Logo from '../static/images/icon.png';
 
 class ChatContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.messageContainer = React.createRef();
+  }
+
   state = {
     newMessage: '',
+  };
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate(previousProps) {
+    if (previousProps.messages.length !== this.props.messages.length) {
+      this.scrollToBottom();
+    }
   }
 
   getAuthor = (msg, nextMsg) => {
@@ -22,6 +37,13 @@ class ChatContainer extends React.Component {
     return null;
   };
 
+  scrollToBottom = () => {
+    const node = this.messageContainer.current;
+    if (node) {
+      node.scrollTop = node.scrollHeight;
+    }
+  };
+
   handleInputChange = e => {
     this.setState({ newMessage: e.target.value });
   };
@@ -31,7 +53,7 @@ class ChatContainer extends React.Component {
       e.preventDefault();
       this.handleSubmit();
     }
-  }
+  };
 
   handleSubmit = () => {
     this.props.onSubmit(this.state.newMessage);
@@ -51,13 +73,12 @@ class ChatContainer extends React.Component {
           </button>
         </Header>
         {this.props.messagesLoaded ? (
-          <div
-            id="message-container"
-          >
+          <div id="message-container" ref={this.messageContainer}>
             {this.props.messages.map((msg, i) => (
               <div
                 key={msg.id}
-                className={`message ${this.props.user.email === msg.author && 'mine'}`}
+                className={`message ${this.props.user.email === msg.author &&
+                  'mine'}`}
               >
                 <p>{msg.msg}</p>
                 {this.getAuthor(msg, this.props.messages[i + 1])}

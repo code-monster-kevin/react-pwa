@@ -80,7 +80,8 @@ class App extends React.Component {
               onSubmit={this.handleSubmitMessage}
               user={this.state.user}
               messages={this.state.messages}
-            />)}
+            />
+          )}
         />
         <Route path="/login" component={LoginContainer} />
         <Route
